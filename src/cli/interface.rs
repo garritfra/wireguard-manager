@@ -1,5 +1,7 @@
 use clap::{App, SubCommand};
 
+use std::process::Command;
+
 pub fn command<'a, 'b>() -> App<'a, 'b> {
   SubCommand::with_name("interfaces")
     .alias("if")
@@ -16,14 +18,8 @@ pub fn run(args: &clap::ArgMatches) {
 }
 
 fn list_interfaces() {
-  let files = std::fs::read_dir("/etc/wireguard").unwrap();
-
-  for path in files {
-    let file_string: &str = &path
-      .unwrap()
-      .file_name()
-      .into_string()
-      .unwrap_or(String::new());
-    println!("{}", file_string.split('.').take(1).collect::<Vec<_>>()[0]);
-  }
+  Command::new("wg")
+    .args(&["show", "interfaces"])
+    .output()
+    .expect("failed to execute process");
 }

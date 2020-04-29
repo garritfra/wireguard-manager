@@ -2,7 +2,7 @@ extern crate clap;
 
 mod cli;
 
-use clap::{App, SubCommand};
+use clap::App;
 
 fn main() {
     let matches = App::new("wireguard-manager")

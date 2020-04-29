@@ -18,8 +18,10 @@ pub fn run(args: &clap::ArgMatches) {
 }
 
 fn list_interfaces() {
-  Command::new("wg")
+  let output = Command::new("wg")
     .args(&["show", "interfaces"])
     .output()
     .expect("failed to execute process");
+
+  println!("{:?}", output.stdout);
 }

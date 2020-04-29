@@ -23,5 +23,5 @@ fn list_interfaces() {
     .output()
     .expect("failed to execute process");
 
-  println!("{:?}", output.stdout);
+  println!("{}", std::str::from_utf8(&output.stdout).unwrap_or(""));
 }

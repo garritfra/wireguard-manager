@@ -1,4 +1,4 @@
-use clap::{App, SubCommand};
+use clap::{App, Arg, SubCommand};
 
 use std::process::Command;
 
@@ -7,6 +7,7 @@ pub fn command<'a, 'b>() -> App<'a, 'b> {
         .alias("if")
         .alias("interface")
         .subcommand(SubCommand::with_name("list").alias("ls"))
+        .arg(Arg::with_name("interface"))
         .about("Interface tools")
 }
 
@@ -14,6 +15,10 @@ pub fn run(args: &clap::ArgMatches) {
     match args.subcommand() {
         ("list", Some(_)) => list_interfaces(),
         _ => {}
+    }
+    
+    if let Some(interface) = args.value_of("interface") {
+        show_detail(interface);
     }
 }
 
@@ -23,5 +28,18 @@ fn list_interfaces() {
         .output()
         .expect("failed to execute process");
 
-    println!("{}", std::str::from_utf8(&output.stdout).unwrap_or(""));
+    if let Ok(interface_output) = std::str::from_utf8(&output.stdout) {
+        println!("{}", interface_output);
+    }
+}
+
+fn show_detail(interface: &str) {
+    let command_output = Command::new("wg")
+        .args(&["show", interface])
+        .output()
+        .expect("failed to execute process");
+
+    if let Ok(interface_details) = std::str::from_utf8(&command_output.stdout) {
+        println!("{}", interface_details);
+    }
 }

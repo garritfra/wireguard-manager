@@ -3,25 +3,25 @@ use clap::{App, SubCommand};
 use std::process::Command;
 
 pub fn command<'a, 'b>() -> App<'a, 'b> {
-  SubCommand::with_name("interfaces")
-    .alias("if")
-    .alias("interface")
-    .subcommand(SubCommand::with_name("list").alias("ls"))
-    .about("Interface tools")
+    SubCommand::with_name("interfaces")
+        .alias("if")
+        .alias("interface")
+        .subcommand(SubCommand::with_name("list").alias("ls"))
+        .about("Interface tools")
 }
 
 pub fn run(args: &clap::ArgMatches) {
-  match args.subcommand() {
-    ("list", Some(_)) => list_interfaces(),
-    _ => {}
-  }
+    match args.subcommand() {
+        ("list", Some(_)) => list_interfaces(),
+        _ => {}
+    }
 }
 
 fn list_interfaces() {
-  let output = Command::new("wg")
-    .args(&["show", "interfaces"])
-    .output()
-    .expect("failed to execute process");
+    let output = Command::new("wg")
+        .args(&["show", "interfaces"])
+        .output()
+        .expect("failed to execute process");
 
-  println!("{}", std::str::from_utf8(&output.stdout).unwrap_or(""));
+    println!("{}", std::str::from_utf8(&output.stdout).unwrap_or(""));
 }

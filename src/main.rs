@@ -1,7 +1,6 @@
 extern crate clap;
 
 mod cli;
-
 use clap::App;
 
 fn main() {
@@ -10,7 +9,7 @@ fn main() {
         .get_matches();
 
     match matches.subcommand() {
-        ("interfaces", Some(interfaces)) => cli::interface::run(interfaces),
+        ("interfaces", Some(args)) => cli::interface::run(args),
         _ => {}
     }
 }

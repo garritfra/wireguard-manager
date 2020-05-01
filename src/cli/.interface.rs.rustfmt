@@ -2,6 +2,13 @@ use clap::{App, Arg, SubCommand};
 
 use std::process::Command;
 
+pub struct Interface {
+  name: &str,
+  public_key: [u8, 32],
+  private_key: [u8; 32],
+  listening_port: u16,
+}
+
 pub fn command<'a, 'b>() -> App<'a, 'b> {
     SubCommand::with_name("interfaces")
         .alias("if")

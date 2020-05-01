@@ -1,6 +1,10 @@
 extern crate clap;
 
 mod cli;
+mod interface;
+mod parser;
+mod peer;
+
 use clap::App;
 
 fn main() {

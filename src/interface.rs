@@ -1,10 +1,13 @@
 use crate::peer::Peer;
+use serde::{Deserialize, Serialize};
 
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Interface<'a> {
     name: &'a str,
     public_key: [u8; 32],
     private_key: [u8; 32],
     listening_port: u16,
+    #[serde(flatten)]
     peers: Vec<Peer<'a>>,
 }
 

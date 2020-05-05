@@ -1,3 +1,6 @@
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Peer<'a> {
     name: Option<&'a str>,
     public_key: [u8; 32],
